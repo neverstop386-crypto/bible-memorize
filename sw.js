@@ -1,4 +1,4 @@
-const CACHE_NAME = 'bible-memorize-v2';
+const CACHE_NAME = 'bible-memorize-v3';
 const urlsToCache = ['./index.html'];
 
 self.addEventListener('install', event => {
