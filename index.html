@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#8B6914">
+<link rel="manifest" href="./manifest.json">
+<title>52주 성경암송 | 창동진실교회</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700;900&family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#FAF6F0;
+  --bg2:#F3EDE3;
+  --bg-card:#FFFFFF;
+  --gold:#8B6914;
+  --gold-light:#B8941F;
+  --gold-pale:#D4B94E;
+  --gold-bg:rgba(139,105,20,.06);
+  --text:#2C2417;
+  --text-mid:#5C4F3A;
+  --text-dim:#9B8E78;
+  --text-muted:#C4B9A6;
+  --green:#2D8B57;
+  --green-bg:#E8F5EE;
+  --green-border:#A8D5BC;
+  --red:#B5442E;
+  --rest-bg:#F5F0FA;
+  --rest-border:#D4C5E8;
+  --rest-text:#7B6B8F;
+  --border:#E8E0D3;
+  --shadow:0 1px 8px rgba(44,36,23,.06),0 4px 24px rgba(44,36,23,.04);
+  --radius:16px;
+  --safe-top:env(safe-area-inset-top,0px);
+  --safe-bottom:env(safe-area-inset-bottom,0px);
+}
+html{font-size:16px;-webkit-tap-highlight-color:transparent}
+body{
+  font-family:'Noto Sans KR',sans-serif;
+  background:var(--bg);color:var(--text);
+  min-height:100vh;min-height:100dvh;
+  overflow-x:hidden;
+  padding-bottom:calc(76px + var(--safe-bottom));
+  position:relative;
+}
+/* ===== SUBTLE BIBLE BACKGROUND ===== */
+body::before{
+  content:'';position:fixed;top:0;left:0;right:0;bottom:0;
+  pointer-events:none;z-index:0;
+  background:
+    radial-gradient(ellipse 600px 400px at 85% 12%,rgba(139,105,20,.045),transparent 70%),
+    radial-gradient(ellipse 500px 500px at 10% 80%,rgba(139,105,20,.03),transparent 70%);
+}
+body::after{
+  content:'';position:fixed;top:0;left:0;right:0;bottom:0;
+  pointer-events:none;z-index:0;opacity:.03;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 1400'%3E%3Cdefs%3E%3Cstyle%3E.s%7Bfill:none;stroke:%238B6914;stroke-width:.6;opacity:.7%7D%3C/style%3E%3C/defs%3E%3Cpath class='s' d='M680 120 L680 320 M650 180 L710 180'/%3E%3Ccircle class='s' cx='680' cy='170' r='45' opacity='.4'/%3E%3Crect class='s' x='60' y='500' width='200' height='280' rx='6'/%3E%3Cline class='s' x1='80' y1='545' x2='240' y2='545'/%3E%3Cline class='s' x1='80' y1='575' x2='240' y2='575'/%3E%3Cline class='s' x1='80' y1='605' x2='240' y2='605'/%3E%3Cline class='s' x1='80' y1='635' x2='220' y2='635'/%3E%3Cline class='s' x1='80' y1='665' x2='230' y2='665'/%3E%3Cline class='s' x1='80' y1='695' x2='200' y2='695'/%3E%3Cpath class='s' d='M550 900 Q600 850 650 900 Q700 950 750 900' opacity='.4'/%3E%3Cpath class='s' d='M500 1050 C520 1020 540 1060 560 1030 C580 1000 600 1040 620 1010' opacity='.3'/%3E%3Cpath class='s' d='M120 1150 L120 1300 M100 1200 L140 1200' opacity='.5'/%3E%3C/svg%3E");
+  background-size:800px 1400px;background-repeat:repeat;
+}
+.wrap{position:relative;z-index:1}
+
+/* ===== HEADER ===== */
+.header{
+  position:sticky;top:0;z-index:100;
+  padding:calc(10px + var(--safe-top)) 20px 10px;
+  background:linear-gradient(180deg,var(--bg) 70%,rgba(250,246,240,.85));
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+}
+.header-inner{display:flex;align-items:center;justify-content:space-between;max-width:600px;margin:0 auto}
+.church-name{font-size:.78rem;color:var(--text-dim);letter-spacing:.1em;font-weight:500}
+.app-title{font-family:'Noto Serif KR',serif;font-size:1.15rem;font-weight:700;color:var(--gold);margin-top:1px}
+.header-cross{
+  width:38px;height:38px;border-radius:50%;
+  background:linear-gradient(135deg,var(--gold),var(--gold-light));
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;font-size:1.2rem;font-family:'Noto Serif KR',serif;
+  box-shadow:0 2px 12px rgba(139,105,20,.2);
+}
+
+/* ===== PROGRESS ===== */
+.progress-section{text-align:center;padding:12px 20px 16px;max-width:600px;margin:0 auto}
+.progress-ring-wrap{position:relative;display:inline-block;width:130px;height:130px;margin-bottom:8px}
+.progress-ring{transform:rotate(-90deg)}
+.progress-ring circle{fill:none;stroke-width:7;stroke-linecap:round}
+.progress-ring .bg{stroke:var(--border)}
+.progress-ring .fill{stroke:var(--gold);transition:stroke-dashoffset .8s cubic-bezier(.4,0,.2,1);filter:drop-shadow(0 0 6px rgba(139,105,20,.25))}
+.progress-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center}
+.progress-pct{font-family:'Noto Serif KR',serif;font-size:1.9rem;font-weight:900;color:var(--gold);line-height:1}
+.progress-label{font-size:.72rem;color:var(--text-dim);margin-top:2px;font-weight:500}
+.progress-stats{display:flex;gap:20px;justify-content:center;font-size:.85rem;color:var(--text-dim)}
+.progress-stats strong{color:var(--gold);font-weight:700}
+
+/* ===== THIS WEEK ===== */
+.this-week-banner{max-width:600px;margin:0 auto 12px;padding:0 16px}
+.this-week-inner{
+  background:linear-gradient(135deg,rgba(139,105,20,.08),rgba(139,105,20,.02));
+  border:1.5px solid rgba(139,105,20,.15);border-radius:var(--radius);
+  padding:13px 16px;display:flex;align-items:center;gap:12px;
+}
+.this-week-icon{width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,var(--gold),var(--gold-light));display:flex;align-items:center;justify-content:center;color:#fff;font-size:.9rem;flex-shrink:0}
+.this-week-text{font-size:.88rem;color:var(--text-mid)}
+.this-week-text strong{display:block;font-size:1rem;color:var(--gold);font-family:'Noto Serif KR',serif;font-weight:700}
+
+/* ===== SEARCH ===== */
+.search-bar{max-width:600px;margin:0 auto 10px;padding:0 16px}
+.search-input{width:100%;padding:12px 16px;border-radius:12px;background:var(--bg-card);border:1.5px solid var(--border);color:var(--text);font-size:.95rem;font-family:'Noto Sans KR',sans-serif;outline:none;box-shadow:var(--shadow)}
+.search-input::placeholder{color:var(--text-muted)}
+.search-input:focus{border-color:var(--gold-pale);box-shadow:0 0 0 3px rgba(139,105,20,.08)}
+
+/* ===== TABS ===== */
+.tabs{display:flex;gap:6px;padding:0 16px;margin:0 auto 14px;max-width:600px;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex:1;min-width:0;padding:10px 6px;border-radius:12px;background:var(--bg-card);border:1.5px solid var(--border);text-align:center;cursor:pointer;transition:all .25s;box-shadow:var(--shadow);-webkit-user-select:none;user-select:none}
+.tab.active{border-color:var(--gold);background:linear-gradient(135deg,rgba(139,105,20,.1),rgba(139,105,20,.03));box-shadow:0 2px 12px rgba(139,105,20,.1)}
+.tab-quarter{font-size:.68rem;color:var(--text-muted);letter-spacing:.06em;font-weight:600}
+.tab.active .tab-quarter{color:var(--gold-light)}
+.tab-theme{font-family:'Noto Serif KR',serif;font-size:.82rem;font-weight:700;color:var(--text-dim);margin-top:2px;word-break:keep-all;line-height:1.3}
+.tab.active .tab-theme{color:var(--gold)}
+
+/* ===== SECTION DIVIDER ===== */
+.section-divider{max-width:600px;margin:0 auto;padding:4px 16px 14px;display:flex;align-items:center;gap:10px;font-size:.78rem;color:var(--text-muted);font-weight:500}
+.section-divider::before,.section-divider::after{content:'';flex:1;height:1px;background:var(--border)}
+.section-divider .ci{color:var(--gold-pale);font-size:.7rem}
+
+/* ===== CARDS ===== */
+.card-list{max-width:600px;margin:0 auto;padding:0 16px 24px;display:flex;flex-direction:column;gap:10px}
+.card{background:var(--bg-card);border-radius:var(--radius);border:1.5px solid var(--border);overflow:hidden;transition:all .3s;cursor:pointer;-webkit-user-select:none;user-select:none;box-shadow:var(--shadow);position:relative}
+.card::before{content:'';position:absolute;top:0;right:0;width:80px;height:80px;background:radial-gradient(circle at top right,rgba(139,105,20,.03),transparent 70%);pointer-events:none}
+.card:active{transform:scale(.985)}
+.card.checked{background:var(--green-bg);border-color:var(--green-border)}
+.card.checked::before{background:radial-gradient(circle at top right,rgba(45,139,87,.04),transparent 70%)}
+.card.rest{background:var(--rest-bg);border-color:var(--rest-border);opacity:.7}
+.card.rest::before{display:none}
+.card-top{display:flex;align-items:center;gap:12px;padding:14px 16px}
+.card-week{width:46px;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--gold-bg);border:1.5px solid rgba(139,105,20,.12);font-family:'Noto Serif KR',serif;font-size:.95rem;font-weight:700;color:var(--gold);transition:all .3s}
+.card.checked .card-week{background:var(--green);border-color:var(--green);color:#fff;box-shadow:0 2px 8px rgba(45,139,87,.2)}
+.card.checked .card-week::after{content:'✓';font-family:system-ui;font-weight:800}
+.card.checked .card-week .wn{display:none}
+.card.rest .card-week{background:var(--rest-bg);border-color:var(--rest-border);color:var(--rest-text);font-size:.75rem}
+.card-meta{flex:1;min-width:0}
+.card-date{font-size:.82rem;color:var(--text-dim)}
+.card-ref{font-family:'Noto Serif KR',serif;font-size:1.05rem;font-weight:700;color:var(--text);display:flex;align-items:center;gap:6px;margin-top:1px;flex-wrap:wrap}
+.badge{font-size:.62rem;font-weight:700;padding:2px 7px;border-radius:20px;font-family:'Noto Sans KR',sans-serif;white-space:nowrap}
+.badge-red{background:rgba(181,68,46,.1);color:var(--red)}
+.badge-gold{background:rgba(139,105,20,.1);color:var(--gold)}
+.badge-purple{background:rgba(107,78,148,.1);color:#6B4E94}
+.card-chk-wrap{display:flex;align-items:center;justify-content:center;width:40px;height:40px;flex-shrink:0}
+.card-chk{width:30px;height:30px;border-radius:50%;border:2px solid var(--text-muted);display:flex;align-items:center;justify-content:center;font-size:.8rem;color:transparent;transition:all .3s}
+.card.checked .card-chk{border-color:var(--green);background:var(--green);color:#fff;box-shadow:0 1px 6px rgba(45,139,87,.2)}
+.card-body{padding:0 16px 14px 74px}
+.card-verse{font-family:'Noto Serif KR',serif;font-size:.95rem;line-height:1.8;color:var(--text-mid);word-break:keep-all}
+.card.rest .card-verse{font-family:'Noto Sans KR',sans-serif;color:var(--rest-text);font-size:.88rem}
+.card-body.collapsed{max-height:0;overflow:hidden;padding:0 16px 0 74px;opacity:0;transition:max-height .3s,padding .3s,opacity .2s}
+.card-body.expanded{max-height:400px;opacity:1;transition:max-height .4s,padding .3s,opacity .3s}
+
+/* ===== INSTALL ===== */
+.install-banner{max-width:600px;margin:0 auto 10px;padding:0 16px;display:none}
+.install-banner.show{display:block}
+.install-inner{background:var(--bg-card);border:1.5px solid var(--border);border-radius:var(--radius);padding:13px 16px;display:flex;align-items:center;gap:12px;box-shadow:var(--shadow)}
+.install-inner .icon{font-size:1.4rem}
+.install-text{flex:1;font-size:.88rem;color:var(--text-mid)}
+.install-text strong{color:var(--gold);display:block;font-weight:700}
+.install-btn{padding:8px 16px;border-radius:10px;background:linear-gradient(135deg,var(--gold),var(--gold-light));color:#fff;font-size:.82rem;font-weight:700;border:none;cursor:pointer;font-family:'Noto Sans KR',sans-serif;white-space:nowrap;box-shadow:0 2px 8px rgba(139,105,20,.2)}
+.install-dismiss{background:none;border:none;color:var(--text-muted);font-size:1rem;cursor:pointer;padding:4px}
+
+/* ===== BOTTOM NAV ===== */
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;padding:6px 16px calc(6px + var(--safe-bottom));background:rgba(250,246,240,.92);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid var(--border);z-index:100}
+.bottom-nav-inner{max-width:600px;margin:0 auto;display:flex;gap:6px}
+.nav-btn{flex:1;padding:8px;border-radius:12px;background:transparent;border:none;color:var(--text-dim);font-size:.75rem;font-weight:500;display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;transition:all .2s;font-family:'Noto Sans KR',sans-serif}
+.nav-btn.active{color:var(--gold);font-weight:700}
+.nav-btn-icon{font-size:1.25rem}
+
+/* ===== SETTINGS ===== */
+.settings-view{max-width:600px;margin:0 auto;padding:20px 16px;display:none}
+.settings-view.active{display:block}
+.settings-title{font-family:'Noto Serif KR',serif;font-size:1.15rem;font-weight:700;color:var(--gold);margin-bottom:16px}
+.settings-group{background:var(--bg-card);border-radius:var(--radius);border:1.5px solid var(--border);padding:16px;margin-bottom:12px;box-shadow:var(--shadow)}
+.settings-group h3{font-size:.9rem;color:var(--gold);margin-bottom:10px;font-weight:700}
+.settings-item{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border)}
+.settings-item:last-child{border:none}
+.settings-item label{font-size:.92rem;color:var(--text-mid)}
+.settings-item .val{font-size:.92rem;color:var(--gold);font-weight:700}
+.reset-btn{width:100%;padding:14px;border-radius:12px;background:rgba(181,68,46,.06);border:1.5px solid rgba(181,68,46,.2);color:var(--red);font-size:.92rem;font-weight:600;cursor:pointer;font-family:'Noto Sans KR',sans-serif;margin-top:8px}
+
+/* ===== INSTALL GUIDE ===== */
+.install-guide .install-desc{font-size:.88rem;color:var(--text-mid);margin-bottom:12px;line-height:1.5}
+.install-step-header{display:flex;align-items:center;justify-content:space-between;padding:10px 0;cursor:pointer;border-bottom:1px solid var(--border)}
+.step-badge{font-size:.78rem;font-weight:700;padding:4px 12px;border-radius:8px}
+.step-badge.android{background:rgba(45,139,87,.1);color:var(--green)}
+.step-badge.iphone{background:rgba(60,60,60,.08);color:#333}
+.step-toggle{font-size:.85rem;color:var(--text-dim);transition:transform .2s}
+.step-toggle.closed{transform:rotate(-90deg)}
+.install-step-body{padding:10px 0 6px}
+.install-step-body ol{padding-left:20px;font-size:.88rem;color:var(--text-mid);line-height:1.8}
+.install-step-body ol li{margin-bottom:4px}
+.install-step-body ol strong{color:var(--text);font-weight:600}
+.install-note{font-size:.78rem;color:var(--red);margin-top:10px;line-height:1.6;padding:10px 12px;background:rgba(181,68,46,.04);border-radius:10px}
+
+/* ===== HELP VIEW ===== */
+.help-view{max-width:600px;margin:0 auto;padding:20px 16px;display:none}
+.help-view.active{display:block}
+.help-item{padding:12px 0;border-bottom:1px solid var(--border)}
+.help-item:last-child{border:none}
+.help-q{font-size:.9rem;font-weight:700;color:var(--gold);margin-bottom:5px}
+.help-a{font-size:.88rem;color:var(--text-mid);line-height:1.7}
+.help-a strong{color:var(--text);font-weight:600}
+
+/* ===== VERSE OVERLAY ===== */
+.verse-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:var(--bg);z-index:200;display:none;flex-direction:column;align-items:center;justify-content:center;padding:40px 28px;text-align:center;animation:fadeIn .3s}
+.verse-overlay.active{display:flex}
+.verse-overlay::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;pointer-events:none;opacity:.035;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 600'%3E%3Cpath fill='none' stroke='%238B6914' stroke-width='.8' d='M200 100 L200 380 M160 180 L240 180'/%3E%3Ccircle fill='none' stroke='%238B6914' stroke-width='.4' cx='200' cy='160' r='90'/%3E%3C/svg%3E");background-size:400px 600px;background-position:center;background-repeat:no-repeat}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.verse-overlay-close{position:absolute;top:calc(16px + var(--safe-top));right:16px;width:38px;height:38px;border-radius:50%;background:var(--bg-card);border:1.5px solid var(--border);color:var(--text-mid);font-size:1.1rem;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:var(--shadow)}
+.verse-overlay-ref{font-family:'Noto Serif KR',serif;font-size:.95rem;color:var(--gold);margin-bottom:20px;letter-spacing:.08em;font-weight:600;position:relative;z-index:1}
+.verse-overlay-text{font-family:'Noto Serif KR',serif;font-size:1.4rem;line-height:2;color:var(--text);word-break:keep-all;max-width:480px;position:relative;z-index:1}
+.verse-overlay-week{margin-top:20px;font-size:.85rem;color:var(--text-dim);position:relative;z-index:1}
+.verse-nav{display:flex;gap:12px;margin-top:28px;position:relative;z-index:1}
+.verse-nav button{padding:12px 24px;border-radius:10px;background:var(--bg-card);border:1.5px solid var(--border);color:var(--text-mid);font-size:.9rem;cursor:pointer;font-family:'Noto Sans KR',sans-serif;box-shadow:var(--shadow)}
+.verse-nav button:active{background:var(--bg2)}
+
+/* ===== WELCOME POPUP ===== */
+.welcome-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.45);z-index:300;display:none;align-items:center;justify-content:center;padding:24px;animation:fadeIn .3s}
+.welcome-overlay.active{display:flex}
+.welcome-box{background:var(--bg);border-radius:20px;max-width:360px;width:100%;padding:28px 24px 20px;box-shadow:0 8px 40px rgba(0,0,0,.15);position:relative;max-height:85vh;overflow-y:auto}
+.welcome-close{position:absolute;top:12px;right:12px;width:32px;height:32px;border-radius:50%;background:var(--bg2);border:1px solid var(--border);color:var(--text-dim);font-size:1rem;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.welcome-icon{text-align:center;font-size:2.5rem;margin-bottom:8px}
+.welcome-title{text-align:center;font-family:'Noto Serif KR',serif;font-size:1.1rem;font-weight:700;color:var(--gold);margin-bottom:4px}
+.welcome-sub{text-align:center;font-size:.82rem;color:var(--text-dim);margin-bottom:18px;line-height:1.5}
+.welcome-section{background:var(--bg-card);border:1.5px solid var(--border);border-radius:14px;padding:16px;margin-bottom:12px}
+.welcome-section h4{font-size:.88rem;font-weight:700;color:var(--text);margin-bottom:8px}
+.welcome-section ol{padding-left:18px;font-size:.85rem;color:var(--text-mid);line-height:1.8}
+.welcome-section ol strong{color:var(--text);font-weight:600}
+.welcome-later{width:100%;padding:13px;border-radius:12px;background:var(--bg2);border:1.5px solid var(--border);color:var(--text-mid);font-size:.88rem;font-weight:600;cursor:pointer;font-family:'Noto Sans KR',sans-serif;margin-top:4px;text-align:center}
+.welcome-later:active{opacity:.7}
+
+@keyframes checkPop{0%{transform:scale(1)}50%{transform:scale(1.08)}100%{transform:scale(1)}}
+.card.just-checked{animation:checkPop .3s ease}
+
+@media(max-width:360px){
+  .card-body{padding:0 12px 14px 62px}
+  .card-top{padding:12px 12px}
+  .card-week{width:40px;height:40px;font-size:.82rem}
+  .app-title{font-size:1.05rem}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="header"><div class="header-inner">
+  <div><div class="church-name">창동진실교회 2026</div><div class="app-title">말씀이 길이 되고 암송이 힘이 되는 한해</div></div>
+  <div class="header-cross">✝</div>
+</div></div>
+
+<div id="mainView">
+  <div class="progress-section">
+    <div class="progress-ring-wrap">
+      <svg class="progress-ring" width="130" height="130">
+        <circle class="bg" cx="65" cy="65" r="56"/>
+        <circle class="fill" id="pCircle" cx="65" cy="65" r="56" stroke-dasharray="352" stroke-dashoffset="352"/>
+      </svg>
+      <div class="progress-center">
+        <div class="progress-pct" id="pPct">0%</div>
+        <div class="progress-label">암송 진행률</div>
+      </div>
+    </div>
+    <div class="progress-stats">
+      <span>완료 <strong id="sDone">0</strong></span>
+      <span>남음 <strong id="sLeft">0</strong></span>
+      <span>연속 <strong id="sStrk">0주</strong></span>
+    </div>
+  </div>
+
+  <div class="install-banner" id="instBanner">
+    <div class="install-inner">
+      <div class="icon">📲</div>
+      <div class="install-text"><strong>홈 화면에 추가하기</strong>앱처럼 바로 열 수 있습니다</div>
+      <button class="install-btn" id="instBtn">설치</button>
+      <button class="install-dismiss" id="instX">✕</button>
+    </div>
+  </div>
+
+  <div class="this-week-banner" id="twBanner" style="display:none">
+    <div class="this-week-inner">
+      <div class="this-week-icon">📖</div>
+      <div class="this-week-text"><strong id="twRef"></strong><span id="twLabel"></span></div>
+    </div>
+  </div>
+
+  <div class="search-bar"><input class="search-input" id="searchIn" type="text" placeholder="🔍  구절, 성경, 주차 검색..."></div>
+  <div class="tabs" id="tabs"></div>
+  <div class="section-divider"><span class="ci">✝</span><span id="secName"></span></div>
+  <div class="card-list" id="cardList"></div>
+</div>
+
+<div class="settings-view" id="setView">
+  <div class="settings-title">⚙️ 설정</div>
+
+  <div class="settings-group install-guide">
+    <h3>📲 홈 화면에 추가하기</h3>
+    <p class="install-desc">홈 화면에 추가하면 앱처럼 바로 열 수 있습니다.</p>
+    <div class="install-steps" id="installSteps">
+      <div class="install-step-header" id="stepAndroid">
+        <span class="step-badge android">Android</span>
+        <span class="step-toggle" id="toggleAndroid">▾</span>
+      </div>
+      <div class="install-step-body" id="bodyAndroid">
+        <ol>
+          <li>크롬(Chrome) 브라우저로 이 페이지를 열어주세요</li>
+          <li>오른쪽 상단 <strong>⋮</strong> (점 세 개) 메뉴를 누르세요</li>
+          <li><strong>"홈 화면에 추가"</strong> 또는 <strong>"앱 설치"</strong>를 선택하세요</li>
+          <li><strong>추가</strong> 버튼을 누르면 완료!</li>
+        </ol>
+      </div>
+      <div class="install-step-header" id="stepIphone">
+        <span class="step-badge iphone">iPhone</span>
+        <span class="step-toggle" id="toggleIphone">▾</span>
+      </div>
+      <div class="install-step-body" id="bodyIphone" style="display:none">
+        <ol>
+          <li>사파리(Safari) 브라우저로 이 페이지를 열어주세요</li>
+          <li>하단의 <strong>공유 버튼</strong> (□↑ 모양)을 누르세요</li>
+          <li>아래로 스크롤하여 <strong>"홈 화면에 추가"</strong>를 선택하세요</li>
+          <li>오른쪽 상단 <strong>추가</strong>를 누르면 완료!</li>
+        </ol>
+      </div>
+    </div>
+    <p class="install-note">※ 카카오톡 내장 브라우저에서는 설치가 안 됩니다.<br>반드시 크롬(안드로이드) 또는 사파리(아이폰)에서 열어주세요.</p>
+  </div>
+
+  <div class="settings-group"><h3>📊 암송 현황</h3>
+    <div class="settings-item"><label>전체 구절</label><span class="val" id="xTotal">-</span></div>
+    <div class="settings-item"><label>완료 구절</label><span class="val" id="xDone">-</span></div>
+    <div class="settings-item"><label>진행률</label><span class="val" id="xPct">-</span></div>
+    <div class="settings-item"><label>최장 연속</label><span class="val" id="xStrk">-</span></div>
+  </div>
+  <div class="settings-group"><h3>ℹ️ 앱 정보</h3>
+    <div class="settings-item"><label>버전</label><span class="val">1.0</span></div>
+    <div class="settings-item"><label>교회</label><span class="val">창동진실교회</span></div>
+    <div class="settings-item"><label>프로그램</label><span class="val">2026 성경암송</span></div>
+  </div>
+  <button class="reset-btn" id="resetBtn">🗑️ 전체 진행 초기화</button>
+</div>
+
+<div class="verse-overlay" id="vOverlay">
+  <button class="verse-overlay-close" id="vClose">✕</button>
+  <div class="verse-overlay-ref" id="vRef"></div>
+  <div class="verse-overlay-text" id="vText"></div>
+  <div class="verse-overlay-week" id="vWeek"></div>
+  <div class="verse-nav"><button id="vPrev">← 이전</button><button id="vNext">다음 →</button></div>
+</div>
+</div>
+
+<div class="help-view" id="helpView">
+  <div class="settings-title">❓ 도움말</div>
+  <div class="settings-group">
+    <h3>📖 앱 사용법</h3>
+    <div class="help-item">
+      <div class="help-q">구절 내용을 보려면?</div>
+      <div class="help-a">카드를 <strong>한 번 탭</strong>하면 구절이 펼쳐지고, 다시 탭하면 접힙니다.</div>
+    </div>
+    <div class="help-item">
+      <div class="help-q">구절을 크게 보려면?</div>
+      <div class="help-a">카드를 <strong>길게 누르면</strong>(약 0.5초) 전체 화면으로 구절이 크게 표시됩니다. 좌우 버튼으로 이전/다음 구절로 이동할 수 있습니다.</div>
+    </div>
+    <div class="help-item">
+      <div class="help-q">암송 완료 체크는?</div>
+      <div class="help-a">카드 오른쪽의 <strong>동그라미(○)</strong>를 탭하면 초록색 체크(✓)로 바뀌며 암송 완료 처리됩니다. 다시 탭하면 해제됩니다.</div>
+    </div>
+    <div class="help-item">
+      <div class="help-q">특정 구절을 찾으려면?</div>
+      <div class="help-a">상단 <strong>검색창</strong>에서 성경 이름, 구절 내용, 주차 번호로 검색할 수 있습니다. 예: "시편", "여호와", "13주"</div>
+    </div>
+    <div class="help-item">
+      <div class="help-q">분기별로 보려면?</div>
+      <div class="help-a">검색창 아래 <strong>1-3월, 4-6월, 7-9월, 10-12월</strong> 탭을 눌러 분기별로 전환할 수 있습니다.</div>
+    </div>
+  </div>
+  <div class="settings-group">
+    <h3>📲 홈 화면에 앱 설치하기</h3>
+    <p class="help-a" style="margin-bottom:10px">홈 화면에 추가하면 앱처럼 바로 열 수 있습니다.</p>
+    <div class="help-item">
+      <div class="help-q">🤖 안드로이드 (삼성, LG 등)</div>
+      <div class="help-a">① <strong>크롬(Chrome)</strong> 브라우저로 이 페이지를 여세요<br>② 오른쪽 상단 <strong>⋮</strong> (점 세 개) 메뉴를 누르세요<br>③ <strong>"홈 화면에 추가"</strong> 또는 <strong>"앱 설치"</strong>를 선택하세요<br>④ <strong>추가</strong> 버튼을 누르면 완료!</div>
+    </div>
+    <div class="help-item">
+      <div class="help-q">🍎 아이폰 (iPhone)</div>
+      <div class="help-a">① <strong>사파리(Safari)</strong> 브라우저로 이 페이지를 여세요<br>② 하단의 <strong>공유 버튼</strong> (□↑ 모양)을 누르세요<br>③ 아래로 스크롤하여 <strong>"홈 화면에 추가"</strong>를 선택하세요<br>④ 오른쪽 상단 <strong>추가</strong>를 누르면 완료!</div>
+    </div>
+    <p class="install-note">※ 카카오톡 내장 브라우저에서는 설치가 안 됩니다.<br>반드시 크롬(안드로이드) 또는 사파리(아이폰)에서 열어주세요.</p>
+  </div>
+  <div class="settings-group">
+    <h3>💡 알아두면 좋은 점</h3>
+    <div class="help-item">
+      <div class="help-q">인터넷 없이도 되나요?</div>
+      <div class="help-a">네, 한 번 접속하면 <strong>오프라인에서도 사용 가능</strong>합니다.</div>
+    </div>
+    <div class="help-item">
+      <div class="help-q">암송 기록은 어디에 저장되나요?</div>
+      <div class="help-a">본인 <strong>핸드폰에만 저장</strong>됩니다. 다른 사람에게 공유되지 않으며, 브라우저 데이터를 삭제하면 초기화됩니다.</div>
+    </div>
+    <div class="help-item">
+      <div class="help-q">진행 기록을 초기화하려면?</div>
+      <div class="help-a">하단 <strong>설정</strong> 탭 → 맨 아래 <strong>"전체 진행 초기화"</strong> 버튼을 누르세요.</div>
+    </div>
+  </div>
+</div>
+
+<!-- WELCOME POPUP -->
+<div class="welcome-overlay" id="welcomePopup">
+  <div class="welcome-box">
+    <button class="welcome-close" id="welcomeClose">✕</button>
+    <div class="welcome-icon">📖✝</div>
+    <div class="welcome-title">창동진실교회 성경암송</div>
+    <div class="welcome-sub">홈 화면에 추가하면<br>앱처럼 바로 열 수 있습니다</div>
+    <div class="welcome-section" id="welAndroid">
+      <h4>🤖 안드로이드</h4>
+      <ol>
+        <li>오른쪽 상단 <strong>⋮</strong> (점 세 개) 누르기</li>
+        <li><strong>"홈 화면에 추가"</strong> 선택</li>
+        <li><strong>추가</strong> 버튼 누르면 완료!</li>
+      </ol>
+    </div>
+    <div class="welcome-section" id="welIphone">
+      <h4>🍎 아이폰</h4>
+      <ol>
+        <li>하단 <strong>공유 버튼</strong> (□↑) 누르기</li>
+        <li><strong>"홈 화면에 추가"</strong> 선택</li>
+        <li>오른쪽 상단 <strong>추가</strong> 누르면 완료!</li>
+      </ol>
+    </div>
+    <button class="welcome-later" id="welcomeLater">다음에 하기</button>
+  </div>
+</div>
+
+<div class="bottom-nav"><div class="bottom-nav-inner">
+  <div class="nav-btn active" data-view="main" id="nMain"><span class="nav-btn-icon">📖</span>암송</div>
+  <div class="nav-btn" data-view="help" id="nHelp"><span class="nav-btn-icon">❓</span>도움말</div>
+  <div class="nav-btn" data-view="settings" id="nSet"><span class="nav-btn-icon">⚙️</span>설정</div>
+</div></div>
+
+<script>
+const D=[
+  {w:1,m:"1월",d:"4일",r:"시 119:105",v:"주의 말씀은 내 발에 등이요 내 길에 빛이니이다",s:"말씀의 확신",q:1},
+  {w:2,m:"1월",d:"11일",r:"시 119:105",v:"주의 말씀은 내 발에 등이요 내 길에 빛이니이다",s:"말씀의 확신",q:1},
+  {w:3,m:"1월",d:"18일",r:"시 1:1",v:"복 있는 사람은 악인들의 꾀를 따르지 아니하며 죄인들의 길에 서지 아니하며 오만한 자들의 자리에 앉지 아니하고",s:"말씀의 확신",q:1},
+  {w:4,m:"1월",d:"25일",r:"시 1:1",v:"복 있는 사람은 악인들의 꾀를 따르지 아니하며 죄인들의 길에 서지 아니하며 오만한 자들의 자리에 앉지 아니하고",s:"말씀의 확신",q:1},
+  {w:5,m:"2월",d:"1일",r:"마 6:9-13",v:"하늘에 계신 우리 아버지여 이름이 거룩히 여김을 받으시오며 나라가 임하시오며 뜻이 하늘에서 이루어진 것 같이 땅에서도 이루어지이다 오늘 우리에게 일용할 양식을 주시옵고 우리가 우리에게 죄 지은 자를 사하여 준 것 같이 우리 죄를 사하여 주시옵고 우리를 시험에 들게 하지 마시옵고 다만 악에서 구하시옵소서 나라와 권세와 영광이 아버지께 영원히 있사옵나이다 아멘",s:"말씀의 확신",q:1},
+  {w:6,m:"2월",d:"8일",r:"잠 3:5-6",v:"너는 마음을 다하여 여호와를 신뢰하고 네 명철을 의지하지 말라 너는 범사에 그를 인정하라 그리하면 네 길을 지도하시리라",s:"말씀의 확신",q:1},
+  {w:7,m:"2월",d:"15일",r:"휴식 주간",v:"설 명절 연휴 재충전",s:"말씀의 확신",q:1,x:1},
+  {w:8,m:"2월",d:"22일",r:"딤후 3:16",v:"모든 성경은 하나님의 감동으로 된 것으로 교훈과 책망과 바르게 함과 의로 교육하기에 유익하니",s:"말씀의 확신",q:1},
+  {w:9,m:"3월",d:"1일",r:"사 40:8",v:"풀은 마르고 꽃은 시드나 우리 하나님의 말씀은 영원히 서리라 하라",s:"고난과 부활",q:1},
+  {w:10,m:"3월",d:"8일",r:"잠 16:3",v:"너의 행사를 여호와께 맡기라 그리하면 네가 경영하는 것이 이루어지리라",s:"고난과 부활",q:1},
+  {w:11,m:"3월",d:"15일",r:"잠 16:9",v:"사람이 마음으로 자기의 길을 계획할지라도 그의 걸음을 인도하시는 이는 여호와시니라",s:"고난과 부활",q:1},
+  {w:12,m:"3월",d:"22일",r:"민 23:19",v:"하나님은 사람이 아니시니 거짓말을 하지 않으시고 인생이 아니시니 후회가 없으시도다 어찌 그 말씀하신 바를 행하지 않으시며 하신 말씀을 실행하지 않으시랴",s:"고난과 부활",q:1},
+  {w:13,m:"3월",d:"29일",r:"사 53:5",v:"그가 찔림은 우리의 허물 때문이요 그가 상함은 우리의 죄악 때문이라 그가 징계를 받으므로 우리는 평화를 누리고 그가 채찍에 맞으므로 우리는 나음을 받았도다",s:"고난과 부활",q:1,b:"종려주일",bt:"red"},
+  {w:14,m:"4월",d:"5일",r:"요 11:25-26",v:"예수께서 이르시되 나는 부활이요 생명이니 나를 믿는 자는 죽어도 살겠고 무릇 살아서 나를 믿는 자는 영원히 죽지 아니하리니 이것을 네가 믿느냐",s:"고난과 부활",q:2,b:"부활절",bt:"gold"},
+  {w:15,m:"4월",d:"12일",r:"휴식 주간",v:"부활절 후 말씀 되새김",s:"고난과 부활",q:2,x:1},
+  {w:16,m:"4월",d:"19일",r:"롬 5:8",v:"우리가 아직 죄인 되었을 때에 그리스도께서 우리를 위하여 죽으심으로 하나님께서 우리에 대한 자기의 사랑을 확증하셨느니라",s:"고난과 부활",q:2},
+  {w:17,m:"4월",d:"26일",r:"갈 2:20",v:"내가 그리스도와 함께 십자가에 못 박혔나니 그런즉 이제는 내가 사는 것이 아니요 오직 내 안에 그리스도께서 사시는 것이라 이제 내가 육체 가운데 사는 것은 나를 사랑하사 나를 위하여 자기 자신을 버리신 하나님의 아들을 믿는 믿음 안에서 사는 것이라",s:"고난과 부활",q:2},
+  {w:18,m:"5월",d:"3일",r:"신 6:5",v:"너는 마음을 다하고 뜻을 다하고 힘을 다하여 네 하나님 여호와를 사랑하라",s:"위로와 평안",q:2},
+  {w:19,m:"5월",d:"10일",r:"롬 8:28",v:"우리가 알거니와 하나님을 사랑하는 자 곧 그의 뜻대로 부르심을 입은 자들에게는 모든 것이 합력하여 선을 이루느니라",s:"위로와 평안",q:2},
+  {w:20,m:"5월",d:"17일",r:"사 43:1",v:"야곱아 너를 창조하신 여호와께서 지금 말씀하시느니라 이스라엘아 너를 지으신 이가 말씀하시느니라 너는 두려워하지 말라 내가 너를 구속하였고 내가 너를 지명하여 불렀나니 너는 내 것이라",s:"위로와 평안",q:2},
+  {w:21,m:"5월",d:"24일",r:"빌 4:6-7",v:"아무 것도 염려하지 말고 다만 모든 일에 기도와 간구로, 너희 구할 것을 감사함으로 하나님께 아뢰라 그리하면 모든 지각에 뛰어난 하나님의 평강이 그리스도 예수 안에서 너희 마음과 생각을 지키시리라",s:"위로와 평안",q:2},
+  {w:22,m:"5월",d:"31일",r:"요 3:16",v:"하나님이 세상을 이처럼 사랑하사 독생자를 주셨으니 이는 그를 믿는 자마다 멸망하지 않고 영생을 얻게 하려 하심이라",s:"위로와 평안",q:2},
+  {w:23,m:"6월",d:"7일",r:"사 40:31",v:"오직 여호와를 앙망하는 자는 새 힘을 얻으리니 독수리가 날개치며 올라감 같을 것이요 달음박질하여도 곤비하지 아니하겠고 걸어가도 피곤하지 아니하리로다",s:"위로와 평안",q:2},
+  {w:24,m:"6월",d:"14일",r:"시 62:5",v:"나의 영혼아 잠잠히 하나님만 바라라 무릇 나의 소망이 그로부터 나오는도다",s:"위로와 평안",q:2},
+  {w:25,m:"6월",d:"21일",r:"욥 23:10",v:"그러나 내가 가는 길을 그가 아시나니 그가 나를 단련하신 후에는 내가 순금 같이 되어 나오리라",s:"위로와 평안",q:2},
+  {w:26,m:"6월",d:"28일",r:"시 23:1-3",v:"여호와는 나의 목자시니 내게 부족함이 없으리로다 그가 나를 푸른 초장에 누이시며 쉴 만한 물 가로 인도하시는도다 내 영혼을 소생시키시고 자기 이름을 위하여 의의 길로 인도하시는도다",s:"위로와 평안",q:2},
+  {w:27,m:"7월",d:"5일",r:"시 145:1",v:"왕이신 나의 하나님이여 내가 주를 높이고 영원히 주의 이름을 송축하리이다",s:"믿음의 성숙",q:3,b:"맥추감사",bt:"gold"},
+  {w:28,m:"7월",d:"12일",r:"마 11:28-30",v:"수고하고 무거운 짐 진 자들아 다 내게로 오라 내가 너희를 쉬게 하리라 나는 마음이 온유하고 겸손하니 나의 멍에를 메고 내게 배우라 그리하면 너희 마음이 쉼을 얻으리니 이는 내 멍에는 쉽고 내 짐은 가벼움이라",s:"믿음의 성숙",q:3},
+  {w:29,m:"7월",d:"19일",r:"잠 3:16-17",v:"그의 오른손에는 장수가 있고 그의 왼손에는 부귀가 있나니 그 길은 즐거운 길이요 그의 지름길은 다 평강이니라",s:"믿음의 성숙",q:3},
+  {w:30,m:"7월",d:"26일",r:"히 11:6",v:"믿음이 없이는 하나님을 기쁘시게 하지 못하나니 하나님께 나아가는 자는 반드시 그가 계신 것과 또한 그가 자기를 찾는 자들에게 상 주시는 이심을 믿어야 할지니라",s:"믿음의 성숙",q:3},
+  {w:31,m:"8월",d:"2일",r:"휴식 주간",v:"여름 휴가 기간",s:"믿음의 성숙",q:3,x:1},
+  {w:32,m:"8월",d:"9일",r:"휴식 주간",v:"여름 수련회 및 재충전",s:"믿음의 성숙",q:3,x:1},
+  {w:33,m:"8월",d:"16일",r:"마 5:8-9",v:"마음이 청결한 자는 복이 있나니 그들이 하나님을 볼 것임이요 화평하게 하는 자는 복이 있나니 그들이 하나님의 아들이라 일컬음을 받을 것임이라",s:"믿음의 성숙",q:3},
+  {w:34,m:"8월",d:"23일",r:"마 6:33",v:"그런즉 너희는 먼저 그의 나라와 그의 의를 구하라 그리하면 이 모든 것을 너희에게 더하시리라",s:"믿음의 성숙",q:3},
+  {w:35,m:"8월",d:"30일",r:"미 6:8",v:"사람아 주께서 선한 것이 무엇임을 네게 보이셨나니 여호와께서 네게 구하시는 것은 오직 정의를 행하며 인자를 사랑하며 겸손하게 네 하나님과 함께 행하는 것이 아니냐",s:"믿음의 성숙",q:3},
+  {w:36,m:"9월",d:"6일",r:"롬 14:17-18",v:"하나님의 나라는 먹는 것과 마시는 것이 아니요 오직 성령 안에 있는 의와 평강과 희락이라 이로써 그리스도를 섬기는 자는 하나님을 기쁘시게 하며 사람에게도 칭찬을 받느니라",s:"믿음의 성숙",q:3},
+  {w:37,m:"9월",d:"13일",r:"롬 12:1-2",v:"그러므로 형제들아 내가 하나님의 모든 자비하심으로 너희를 권하노니 너희 몸을 하나님이 기뻐하시는 거룩한 산 제물로 드리라 이는 너희가 드릴 영적 예배니라 너희는 이 세대를 본받지 말고 오직 마음을 새롭게 함으로 변화를 받아 하나님의 선하시고 기뻐하시고 온전하신 뜻이 무엇인지 분별하도록 하라",s:"믿음의 성숙",q:3},
+  {w:38,m:"9월",d:"20일",r:"잠 18:21",v:"죽고 사는 것이 혀의 힘에 달렸나니 혀를 쓰기 좋아하는 자는 혀의 열매를 먹으리라",s:"믿음의 성숙",q:3},
+  {w:39,m:"9월",d:"27일",r:"휴식 주간",v:"추석 명절 연휴",s:"믿음의 성숙",q:3,x:1},
+  {w:40,m:"10월",d:"4일",r:"약 1:22",v:"너희는 말씀을 행하는 자가 되고 듣기만 하여 자신을 속이는 자가 되지 말라",s:"추수와 은혜",q:4},
+  {w:41,m:"10월",d:"11일",r:"시 73:28",v:"하나님께 가까이 함이 내게 복이라 내가 주 여호와를 나의 피난처로 삼아 주의 모든 행적을 전파하리이다",s:"추수와 은혜",q:4},
+  {w:42,m:"10월",d:"18일",r:"시 100:4-5",v:"감사함으로 그의 문에 들어가며 찬송함으로 그의 궁정에 들어가서 그에게 감사하며 그의 이름을 송축할지어다 여호와는 선하시니 그의 인자하심이 영원하고 그의 성실하심이 대대에 이르리로다",s:"추수와 은혜",q:4,b:"추수감사",bt:"gold"},
+  {w:43,m:"10월",d:"25일",r:"롬 1:17",v:"복음에는 하나님의 의가 나타나서 믿음으로 믿음에 이르게 하나니 기록된 바 오직 의인은 믿음으로 말미암아 살리라 함과 같으니라",s:"추수와 은혜",q:4,b:"종교개혁",bt:"purple"},
+  {w:44,m:"11월",d:"1일",r:"마 28:19-20",v:"그러므로 너희는 가서 모든 민족을 제자로 삼아 아버지와 아들과 성령의 이름으로 세례를 베풀고 내가 너희에게 분부한 모든 것을 가르쳐 지키게 하라 볼지어다 내가 세상 끝날까지 너희와 항상 함께 있으리라 하시니라",s:"전도와 소망",q:4,b:"한영혼초청",bt:"gold"},
+  {w:45,m:"11월",d:"8일",r:"행 1:8",v:"오직 성령이 너희에게 임하시면 너희가 권능을 받고 예루살렘과 온 유대와 사마리아와 땅 끝까지 이르러 내 증인이 되리라 하시니라",s:"전도와 소망",q:4},
+  {w:46,m:"11월",d:"15일",r:"고전 15:58",v:"그러므로 내 사랑하는 형제들아 견실하며 흔들리지 말고 항상 주의 일에 더욱 힘쓰는 자들이 되라 이는 너희 수고가 주 안에서 헛되지 않은 줄을 앎이라",s:"전도와 소망",q:4},
+  {w:47,m:"11월",d:"22일",r:"휴식 주간",v:"연말 사역 준비 및 재충전",s:"전도와 소망",q:4,x:1},
+  {w:48,m:"11월",d:"29일",r:"요 14:6",v:"예수께서 이르시되 내가 곧 길이요 진리요 생명이니 나로 말미암지 않고는 아버지께로 올 자가 없느니라",s:"전도와 소망",q:4,b:"대림절 1주",bt:"purple"},
+  {w:49,m:"12월",d:"6일",r:"사 9:6",v:"이는 한 아기가 우리에게 났고 한 아들을 우리에게 주신 바 되었는데 그의 어깨에는 정사를 메었고 그의 이름은 기묘자라, 모사라, 전능하신 하나님이라, 영존하시는 아버지라, 평강의 왕이라 할 것임이라",s:"전도와 소망",q:4,b:"대림절 2주",bt:"purple"},
+  {w:50,m:"12월",d:"13일",r:"눅 2:10-11",v:"천사가 이르되 무서워하지 말라 보라 내가 온 백성에게 미칠 큰 기쁨의 좋은 소식을 너희에게 전하노라 오늘 다윗의 동네에 너희를 위하여 구주가 나셨으니 곧 그리스도 주시니라",s:"전도와 소망",q:4,b:"대림절 3주",bt:"purple"},
+  {w:51,m:"12월",d:"20일",r:"마 1:21-23",v:"아들을 낳으리니 이름을 예수라 하라 이는 그가 자기 백성을 그들의 죄에서 구원할 자이심이라 하니라 이 모든 일이 된 것은 주께서 선지자로 하신 말씀을 이루려 하심이니 이르시되 보라 처녀가 잉태하여 아들을 낳을 것이요 그의 이름은 임마누엘이라 하리라 하셨으니 이를 번역한즉 하나님이 우리와 함께 계시다 함이라",s:"전도와 소망",q:4,b:"성탄주일",bt:"red"},
+  {w:52,m:"12월",d:"27일",r:"휴식 주간",v:"송년 감사 및 새해 준비",s:"전도와 소망",q:4,x:1},
+];
+const QS=[
+  {id:1,theme:"말씀의 확신",mo:"1-3월"},
+  {id:2,theme:"위로와 평안",mo:"4-6월"},
+  {id:3,theme:"믿음의 성숙",mo:"7-9월"},
+  {id:4,theme:"추수와 소망",mo:"10-12월"},
+];
+
+let ck={},aq=1,expCard=null,curView='main',ovIdx=-1;
+
+function load(){try{const s=localStorage.getItem('b52ck');if(s)ck=JSON.parse(s)}catch(e){}}
+function save(){try{localStorage.setItem('b52ck',JSON.stringify(ck))}catch(e){}}
+const actV=()=>D.filter(d=>!d.x);
+const ckCnt=()=>actV().filter(d=>ck[d.w]).length;
+const totCnt=()=>actV().length;
+function streak(){let b=0,c=0;for(const v of actV().sort((a,b)=>a.w-b.w)){if(ck[v.w]){c++;b=Math.max(b,c)}else c=0}return b}
+function curWeek(){
+  const now=new Date(),yr=2026;
+  for(let i=0;i<D.length;i++){
+    const d=D[i],mn=parseInt(d.m),dn=parseInt(d.d);
+    const dt=new Date(yr,mn-1,dn);
+    const nx=i<D.length-1?new Date(yr,parseInt(D[i+1].m)-1,parseInt(D[i+1].d)):new Date(yr,11,31);
+    if(now>=dt&&now<nx)return d.w;
+  }return 1;
+}
+
+function rTabs(){
+  const el=$('tabs');
+  el.innerHTML=QS.map(q=>`<div class="tab ${q.id===aq?'active':''}" data-q="${q.id}"><div class="tab-quarter">${q.mo}</div><div class="tab-theme">${q.theme}</div></div>`).join('');
+  el.querySelectorAll('.tab').forEach(t=>t.onclick=()=>{aq=+t.dataset.q;rTabs();rCards();uSec()});
+}
+function uSec(){const q=QS.find(q=>q.id===aq);$('secName').textContent=q?q.theme:''}
+
+function rCards(f=''){
+  const el=$('cardList');
+  const items=D.filter(d=>{
+    if(d.q!==aq)return false;
+    if(!f)return true;
+    const fl=f.toLowerCase();
+    return d.r.toLowerCase().includes(fl)||d.v.toLowerCase().includes(fl)||(d.w+'주').includes(fl)||d.s.includes(fl)||(d.b||'').includes(fl);
+  });
+  el.innerHTML=items.map(d=>{
+    const ic=ck[d.w],ie=expCard===d.w;
+    const cls=['card',ic?'checked':'',d.x?'rest':''].filter(Boolean).join(' ');
+    const bc=d.bt==='gold'?'badge-gold':d.bt==='purple'?'badge-purple':'badge-red';
+    return `<div class="${cls}" data-w="${d.w}">
+      <div class="card-top">
+        <div class="card-week"><span class="wn">${d.x?'쉼':d.w}</span></div>
+        <div class="card-meta">
+          <div class="card-date">${d.m} ${d.d} · ${d.w}주차 · ${d.s}</div>
+          <div class="card-ref">${d.r}${d.b?` <span class="badge ${bc}">✝ ${d.b}</span>`:''}</div>
+        </div>
+        ${!d.x?`<div class="card-chk-wrap"><div class="card-chk">${ic?'✓':''}</div></div>`:''}
+      </div>
+      <div class="card-body ${ie?'expanded':'collapsed'}"><div class="card-verse">${d.v}</div></div>
+    </div>`;
+  }).join('');
+
+  el.querySelectorAll('.card').forEach(c=>{
+    const w=+c.dataset.w,it=D.find(d=>d.w===w);
+    c.onclick=e=>{if(e.target.closest('.card-chk-wrap'))return;expCard=expCard===w?null:w;rCards(f)};
+    let pt;
+    c.ontouchstart=()=>{pt=setTimeout(()=>{if(!it.x)openV(D.indexOf(it))},500)};
+    c.ontouchend=()=>clearTimeout(pt);
+    c.ontouchmove=()=>clearTimeout(pt);
+    const ch=c.querySelector('.card-chk-wrap');
+    if(ch)ch.onclick=e=>{
+      e.stopPropagation();
+      if(ck[w])delete ck[w];else ck[w]=true;
+      save();c.classList.add('just-checked');
+      setTimeout(()=>c.classList.remove('just-checked'),300);
+      rCards(f);uProg();
+    };
+  });
+}
+
+function uProg(){
+  const dn=ckCnt(),tt=totCnt(),p=tt>0?Math.round(dn/tt*100):0,st=streak();
+  $('pPct').textContent=p+'%';
+  $('sDone').textContent=dn;
+  $('sLeft').textContent=tt-dn;
+  $('sStrk').textContent=st+'주';
+  const circ=2*Math.PI*56;
+  $('pCircle').style.strokeDashoffset=circ-(p/100)*circ;
+  $('xTotal').textContent=tt+'개';$('xDone').textContent=dn+'개';
+  $('xPct').textContent=p+'%';$('xStrk').textContent=st+'주';
+}
+
+function rThisWeek(){
+  const cw=curWeek(),it=D.find(d=>d.w===cw);
+  if(!it||it.x)return;
+  $('twBanner').style.display='block';
+  $('twRef').textContent=`이번 주: ${it.r}`;
+  $('twLabel').textContent=`${it.w}주차 · ${it.m} ${it.d}`;
+  aq=it.q;
+}
+
+function openV(i){ovIdx=i;const it=D[i];$('vRef').textContent=it.r;$('vText').textContent=it.v;$('vWeek').textContent=`${it.w}주차 · ${it.m} ${it.d} · ${it.s}`;$('vOverlay').classList.add('active')}
+function closeV(){$('vOverlay').classList.remove('active')}
+function navV(dir){let n=ovIdx+dir;while(n>=0&&n<D.length&&D[n].x)n+=dir;if(n>=0&&n<D.length)openV(n)}
+
+function $(id){return document.getElementById(id)}
+$('vClose').onclick=closeV;
+$('vPrev').onclick=()=>navV(-1);
+$('vNext').onclick=()=>navV(1);
+$('nMain').onclick=()=>sw('main');
+$('nHelp').onclick=()=>sw('help');
+$('nSet').onclick=()=>sw('settings');
+function sw(v){
+  curView=v;
+  $('mainView').style.display=v==='main'?'block':'none';
+  $('setView').classList.toggle('active',v==='settings');
+  $('helpView').classList.toggle('active',v==='help');
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.toggle('active',b.dataset.view===v));
+  if(v==='settings')uProg();
+}
+$('searchIn').oninput=e=>rCards(e.target.value.trim());
+$('resetBtn').onclick=()=>{if(confirm('정말 전체 암송 진행 상태를 초기화하시겠습니까?\n\n이 작업은 되돌릴 수 없습니다.')){ck={};save();uProg();rCards();alert('초기화되었습니다.')}};
+
+// Settings install guide toggles
+$('stepAndroid').onclick=()=>{const b=$('bodyAndroid'),t=$('toggleAndroid');if(b.style.display==='none'){b.style.display='block';t.classList.remove('closed')}else{b.style.display='none';t.classList.add('closed')}};
+$('stepIphone').onclick=()=>{const b=$('bodyIphone'),t=$('toggleIphone');if(b.style.display==='none'){b.style.display='block';t.classList.remove('closed')}else{b.style.display='none';t.classList.add('closed')}};
+let dp;
+window.onbeforeinstallprompt=e=>{e.preventDefault();dp=e;$('instBanner').classList.add('show')};
+$('instBtn').onclick=async()=>{if(dp){dp.prompt();await dp.userChoice;dp=null;$('instBanner').classList.remove('show')}};
+$('instX').onclick=()=>$('instBanner').classList.remove('show');
+if('serviceWorker' in navigator)navigator.serviceWorker.register('./sw.js').catch(()=>{});
+
+// Welcome popup - show on first visit only, not in standalone mode
+function showWelcome(){
+  const dismissed = localStorage.getItem('b52_welcome_dismissed');
+  const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+  if(dismissed || isStandalone) return;
+  // Detect OS and show relevant section
+  const ua = navigator.userAgent.toLowerCase();
+  const isIOS = /iphone|ipad|ipod/.test(ua);
+  const isAndroid = /android/.test(ua);
+  if(isIOS){$('welAndroid').style.display='none'}
+  else if(isAndroid){$('welIphone').style.display='none'}
+  // Show popup after short delay
+  setTimeout(()=>{$('welcomePopup').classList.add('active')},800);
+}
+function closeWelcome(){
+  $('welcomePopup').classList.remove('active');
+  try{localStorage.setItem('b52_welcome_dismissed','1')}catch(e){}
+}
+$('welcomeClose').onclick=closeWelcome;
+$('welcomeLater').onclick=closeWelcome;
+
+load();rThisWeek();rTabs();uSec();rCards();uProg();showWelcome();
+</script>
+</body>
+</html>
